@@ -15,15 +15,15 @@ defmodule ReqHex do
         case request.uri.path do
           "/names" ->
             request
-            |> Req.append_response_steps([&ReqHex.decode_names/2])
+            |> Req.append_response_steps([&decode_names/2])
 
           "/versions" ->
             request
-            |> Req.append_response_steps([&ReqHex.decode_versions/2])
+            |> Req.append_response_steps([&decode_versions/2])
 
           "/packages/" <> name ->
             request
-            |> Req.append_response_steps([&ReqHex.decode_package(&1, &2, name)])
+            |> Req.append_response_steps([&decode_package(&1, &2, name)])
 
           _ ->
             request
@@ -38,8 +38,7 @@ defmodule ReqHex do
     request
   end
 
-  @doc false
-  def decode_names(request, response) do
+  defp decode_names(request, response) do
     response =
       update_in(response.body, fn body ->
         public_key = :hex_core.default_config().repo_public_key
@@ -50,8 +49,7 @@ defmodule ReqHex do
     {request, response}
   end
 
-  @doc false
-  def decode_versions(request, response) do
+  defp decode_versions(request, response) do
     response =
       update_in(response.body, fn body ->
         public_key = :hex_core.default_config().repo_public_key
@@ -62,8 +60,7 @@ defmodule ReqHex do
     {request, response}
   end
 
-  @doc false
-  def decode_package(request, response, package_name) do
+  defp decode_package(request, response, package_name) do
     response =
       update_in(response.body, fn body ->
         public_key = :hex_core.default_config().repo_public_key
