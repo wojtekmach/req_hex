@@ -19,8 +19,8 @@ defmodule ReqHex.MixProject do
 
   defp deps do
     [
-      {:req, "~> 0.1.0", github: "wojtekmach/req", branch: "wm-plugins"},
-      {:hex_core, ">= 0.0.0"}
+      {:req, github: "wojtekmach/req"},
+      {:hex_core, "~> 0.8.0"}
     ]
   end
 end
