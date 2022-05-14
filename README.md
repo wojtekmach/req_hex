@@ -59,5 +59,5 @@ IO.puts body["contents.tar.gz"]["mix.exs"]
 #     ]
 #   end
 #   ...
-:ok
+#=> :ok
 ```
