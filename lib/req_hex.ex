@@ -1,6 +1,6 @@
 defmodule ReqHex do
   @moduledoc """
-  Req plugin for [Hex](https://hex.pm).
+  `Req` plugin for [Hex](https://hex.pm).
 
   ReqHex automatically decodes Hex registry resources and tarballs on these endpoints:
 
