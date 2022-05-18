@@ -1,6 +1,6 @@
 # ReqHex
 
-[Req](https://github.com/wojtekmach/req_s3) plugin for [Hex](https://hex.pm).
+[Req](https://github.com/wojtekmach/req) plugin for [Hex](https://hex.pm).
 
 ReqHex automatically decodes Hex registry resources and tarballs on these endpoints:
 
