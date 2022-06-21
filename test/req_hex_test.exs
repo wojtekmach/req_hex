@@ -1,5 +1,5 @@
 defmodule ReqHexTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   test "names" do
     req = Req.new(base_url: "https://repo.hex.pm") |> ReqHex.attach()
