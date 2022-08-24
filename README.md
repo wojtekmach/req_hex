@@ -1,6 +1,6 @@
 # ReqHex
 
-[Req](https://github.com/wojtekmach/req_s3) plugin for [Hex](https://hex.pm).
+[Req](https://github.com/wojtekmach/req) plugin for [Hex API](https://github.com/hexpm/specifications/blob/main/endpoints.md#repository).
 
 ReqHex automatically decodes Hex registry resources and tarballs on these endpoints:
 
@@ -15,8 +15,8 @@ https://repo.hex.pm/tarballs/<package>-<version>.tar
 
 ```elixir
 Mix.install([
-  {:req, github: "wojtekmach/req"},
-  {:req_hex, github: "wojtekmach/req_hex"}
+  {:req, "~> 0.3.0"},
+  {:req_hex, "~> 0.1.0"}
 ])
 
 req = Req.new(base_url: "https://repo.hex.pm") |> ReqHex.attach()
