@@ -20,7 +20,7 @@ defmodule ReqHex.MixProject do
         description: "Req plugin for Hex API.",
         licenses: ["Apache-2.0"],
         links: %{
-          "GitHub" => "https://github.com/wojtekmach/req_s3"
+          "GitHub" => "https://github.com/wojtekmach/req_hex"
         }
       ]
     ]
