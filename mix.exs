@@ -1,10 +1,13 @@
 defmodule ReqHex.MixProject do
   use Mix.Project
 
+  @version "0.1.1"
+  @source_url "https://github.com/wojtekmach/req_hex"
+
   def project do
     [
       app: :req_hex,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -13,6 +16,8 @@ defmodule ReqHex.MixProject do
         "hex.publish": :docs
       ],
       docs: [
+        source_url: @source_url,
+        source_ref: "v#{@version}",
         main: "readme",
         extras: ["README.md", "CHANGELOG.md"]
       ],
@@ -20,7 +25,7 @@ defmodule ReqHex.MixProject do
         description: "Req plugin for Hex API.",
         licenses: ["Apache-2.0"],
         links: %{
-          "GitHub" => "https://github.com/wojtekmach/req_hex"
+          "GitHub" => @source_url
         }
       ]
     ]
@@ -34,7 +39,7 @@ defmodule ReqHex.MixProject do
 
   defp deps do
     [
-      {:req, "~> 0.3.0"},
+      {:req, "~> 0.4.0"},
       {:hex_core, "~> 0.8.0"},
       {:ex_doc, ">= 0.0.0", only: :docs}
     ]

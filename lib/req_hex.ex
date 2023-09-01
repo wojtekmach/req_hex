@@ -80,14 +80,14 @@ defmodule ReqHex do
   end
 
   defp decode_tarball(body, response) do
-    {_, "application/octet-stream"} = List.keyfind(response.headers, "content-type", 0)
+    ["application/octet-stream"] = Req.Response.get_header(response, "content-type")
     {:ok, files} = :erl_tar.extract({:binary, body}, [:memory])
 
     Map.new(files, fn
-      {'metadata.config', value} ->
+      {~c"metadata.config", value} ->
         {"metadata.config", parse_metadata(value)}
 
-      {'contents.tar.gz', value} ->
+      {~c"contents.tar.gz", value} ->
         {"contents.tar.gz", parse_contents(value)}
 
       {name, value} ->

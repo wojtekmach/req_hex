@@ -34,6 +34,6 @@ defmodule ReqHexTest do
 
   test "non existing resource" do
     req = Req.new(base_url: "https://repo.hex.pm") |> ReqHex.attach()
-    assert Req.get!(req, url: "/bad").status == 403
+    assert Req.get!(req, url: "/bad").status == 404
   end
 end
