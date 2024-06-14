@@ -33,9 +33,7 @@ defmodule ReqHex do
   end
 
   defp detect(%{url: %{scheme: "https", host: "repo.hex.pm", port: 443}} = request) do
-    request
-    |> Req.Request.merge_options(decode_body: false)
-    |> Req.Request.append_response_steps(req_hex_decode: &decode/1)
+    Req.Request.prepend_response_steps(request, req_hex_decode: &decode/1)
   end
 
   defp detect(request) do

@@ -37,8 +37,9 @@ defmodule ReqHexTest do
     assert "defmodule Req do\n" <> _ = tarball["contents.tar.gz"]["lib/req.ex"]
   end
 
-  test "non existing resource" do
+  test "docs" do
     req = Req.new(base_url: "https://repo.hex.pm") |> ReqHex.attach()
-    assert Req.get!(req, url: "/bad").status == 404
+    files = Req.get!(req, url: "/docs/req_hex-0.1.0.tar.gz").body
+    assert "index.html" in Enum.map(files, &to_string(elem(&1, 0)))
   end
 end
