@@ -10,10 +10,16 @@ defmodule ReqHex do
   https://repo.hex.pm/packages/<package>
   https://repo.hex.pm/tarballs/<package>-<version>.tar
   ```
+
+  ## Request Options
+
+    `:raw` - if `true`, disables automatic body decoding.
+
+    `:decode_body` - if `false`, disables automatic body decoding.
   """
 
   @doc """
-  Runs the plugin.
+  Attaches the plugin.
 
   ## Examples
 
@@ -41,21 +47,26 @@ defmodule ReqHex do
   end
 
   defp decode({request, %{status: 200} = response}) do
-    case request.url.path do
-      "/names" ->
-        {request, update_in(response.body, &decode_names/1)}
+    if request.options[:raw] == true or
+         request.options[:decode_body] == false do
+      {request, response}
+    else
+      case request.url.path do
+        "/names" ->
+          {request, update_in(response.body, &decode_names/1)}
 
-      "/versions" ->
-        {request, update_in(response.body, &decode_versions/1)}
+        "/versions" ->
+          {request, update_in(response.body, &decode_versions/1)}
 
-      "/packages/" <> name ->
-        {request, update_in(response.body, &decode_package(&1, name))}
+        "/packages/" <> name ->
+          {request, update_in(response.body, &decode_package(&1, name))}
 
-      "/tarballs/" <> _ ->
-        {request, update_in(response.body, &decode_tarball(&1, response))}
+        "/tarballs/" <> _ ->
+          {request, update_in(response.body, &decode_tarball(&1, response))}
 
-      _ ->
-        {request, response}
+        _ ->
+          {request, response}
+      end
     end
   end
 

@@ -1,19 +1,19 @@
 defmodule ReqHexTest do
   use ExUnit.Case
 
-  test "names" do
+  test "/names" do
     req = Req.new(base_url: "https://repo.hex.pm") |> ReqHex.attach()
     %{repository: "hexpm", packages: names} = Req.get!(req, url: "/names").body
     assert Enum.find(names, &(&1.name == "req"))
   end
 
-  test "versions" do
+  test "/versions" do
     req = Req.new(base_url: "https://repo.hex.pm") |> ReqHex.attach()
     %{repository: "hexpm", packages: versions} = Req.get!(req, url: "/versions").body
     assert Enum.find(versions, &(&1.name == "req"))
   end
 
-  test "package" do
+  test "/packages/:name" do
     req = Req.new(base_url: "https://repo.hex.pm") |> ReqHex.attach()
 
     %{repository: "hexpm", name: "req", releases: releases} =
@@ -24,7 +24,7 @@ defmodule ReqHexTest do
     assert Req.get!(req, url: "/packages/404").status == 404
   end
 
-  test "tarball" do
+  test "/tarballs/:path" do
     req = Req.new(base_url: "https://repo.hex.pm") |> ReqHex.attach()
     tarball = Req.get!(req, url: "/tarballs/req-0.1.0.tar").body
 
@@ -37,7 +37,23 @@ defmodule ReqHexTest do
     assert "defmodule Req do\n" <> _ = tarball["contents.tar.gz"]["lib/req.ex"]
   end
 
-  test "docs" do
+  test "raw" do
+    req = Req.new(base_url: "https://repo.hex.pm") |> ReqHex.attach()
+
+    assert <<31, 139, _::binary>> =
+             Req.get!(req, url: "/names", raw: true).body
+
+    assert <<31, 139, _::binary>> =
+             Req.get!(req, url: "/names", decode_body: false).body
+
+    assert <<"VERSION", _::binary>> =
+             Req.get!(req, url: "/tarballs/req-0.1.0.tar", raw: true).body
+
+    assert <<"VERSION", _::binary>> =
+             Req.get!(req, url: "/tarballs/req-0.1.0.tar", decode_body: false).body
+  end
+
+  test "/docs" do
     req = Req.new(base_url: "https://repo.hex.pm") |> ReqHex.attach()
     files = Req.get!(req, url: "/docs/req_hex-0.1.0.tar.gz").body
     assert "index.html" in Enum.map(files, &to_string(elem(&1, 0)))
