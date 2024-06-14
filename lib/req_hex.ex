@@ -42,7 +42,7 @@ defmodule ReqHex do
     request
   end
 
-  defp decode({request, response}) do
+  defp decode({request, %{status: 200} = response}) do
     case request.url.path do
       "/names" ->
         {request, update_in(response.body, &decode_names/1)}
@@ -59,6 +59,10 @@ defmodule ReqHex do
       _ ->
         {request, response}
     end
+  end
+
+  defp decode({request, response}) do
+    {request, response}
   end
 
   defp decode_names(body) do

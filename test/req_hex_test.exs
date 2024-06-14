@@ -17,6 +17,8 @@ defmodule ReqHexTest do
     req = Req.new(base_url: "https://repo.hex.pm") |> ReqHex.attach()
     releases = Req.get!(req, url: "/packages/req").body
     assert Enum.find(releases, &(&1.version == "0.1.0"))
+
+    assert Req.get!(req, url: "/packages/404").status == 404
   end
 
   test "tarball" do
