@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.2.1 (2024-06-14)
+
+  * Handle `/docs` endpoint.
+
+  * Handle `decode_body: false` and `raw: true` options.
+
 ## v0.2.0 (2024-06-14)
 
   * Update to `hex_core` v0.10.
