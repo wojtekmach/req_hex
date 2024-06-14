@@ -3,19 +3,22 @@ defmodule ReqHexTest do
 
   test "names" do
     req = Req.new(base_url: "https://repo.hex.pm") |> ReqHex.attach()
-    names = Req.get!(req, url: "/names").body
+    %{repository: "hexpm", packages: names} = Req.get!(req, url: "/names").body
     assert Enum.find(names, &(&1.name == "req"))
   end
 
   test "versions" do
     req = Req.new(base_url: "https://repo.hex.pm") |> ReqHex.attach()
-    versions = Req.get!(req, url: "/versions").body
+    %{repository: "hexpm", packages: versions} = Req.get!(req, url: "/versions").body
     assert Enum.find(versions, &(&1.name == "req"))
   end
 
   test "package" do
     req = Req.new(base_url: "https://repo.hex.pm") |> ReqHex.attach()
-    releases = Req.get!(req, url: "/packages/req").body
+
+    %{repository: "hexpm", name: "req", releases: releases} =
+      Req.get!(req, url: "/packages/req").body
+
     assert Enum.find(releases, &(&1.version == "0.1.0"))
 
     assert Req.get!(req, url: "/packages/404").status == 404
