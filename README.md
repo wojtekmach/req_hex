@@ -16,7 +16,7 @@ https://repo.hex.pm/tarballs/<package>-<version>.tar
 ```elixir
 Mix.install([
   {:req, "~> 0.3.0"},
-  {:req_hex, "~> 0.1.0"}
+  {:req_hex, "~> 0.2.0"}
 ])
 
 req = Req.new(base_url: "https://repo.hex.pm") |> ReqHex.attach()
